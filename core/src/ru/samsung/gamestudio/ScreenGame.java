@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class ScreenGame implements Screen {
+    private int tubeCount = 3;
+    private Tube[] tubes;
+
 
     MyGdxGame myGdxGame;
     Bird bird;
@@ -14,6 +17,20 @@ public class ScreenGame implements Screen {
 
 
         bird = new Bird(0, MyGdxGame.SCR_HEIGHT / 2, 10, 250, 200);
+
+        initTubes();
+
+        myGdxGame.camera.update();
+        myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
+
+
+        myGdxGame.batch.begin();
+        bird.draw(myGdxGame.batch);
+
+
+        for (Tube tube : tubes) {
+            tube.draw(myGdxGame.batch);
+        }
     }
     @Override
     public void show() {}
@@ -53,9 +70,19 @@ public class ScreenGame implements Screen {
     @Override
     public void dispose() {
         bird.dispose();
+        for (Tube tube : tubes) {
+            tube.dispose();
+        }
 
 
 
+    }
+
+    private void initTubes() {
+        tubes = new Tube[tubeCount];
+        for (int i = 0; i < tubeCount; i++) {
+            tubes[i] = new Tube(tubeCount, i);
+        }
     }
 
 }
