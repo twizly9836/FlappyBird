@@ -1,5 +1,7 @@
 package ru.samsung.gamestudio;
 
+import static ru.samsung.gamestudio.MyGdxGame.SCR_HEIGHT;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
@@ -12,6 +14,22 @@ public class Bird {
     private int height;
     private int x, y;
     private int speed;
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
 
     private int frameCounter;
 
@@ -20,6 +38,8 @@ public class Bird {
 
 
     public Bird(int x, int y, int speed, int width, int height){
+        this.x = x;
+        this.y = y;
         this.height = height;
         this.width = width;
         this.speed = speed;
@@ -64,4 +84,12 @@ public class Bird {
         jump = true;
         jumpHeight = maxHeightOfJump + y;
     }
+    public boolean isInField() {
+        if (y + height < 0) return false;
+        if (y > SCR_HEIGHT) return false;
+
+        return true;
+    }
+
+
 }

@@ -29,6 +29,7 @@ public class Tube {
 
         textureUpperTube = new Texture("tubes/tube_flipped.png");
         textureDownTube = new Texture("tubes/tube.png");
+
     }
 
     public void draw(Batch batch) {
@@ -50,5 +51,22 @@ public class Tube {
         textureUpperTube.dispose();
         textureDownTube.dispose();
     }
+    public boolean isHit(Bird bird) {
+
+
+        if (bird.getY() <= gapY - gapHeight / 2 && bird.getX() + bird.getWidth() >= x && bird.getX() <= x)
+            return true;
+        if (bird.getY() + bird.getHeight() >= gapY + gapHeight / 2 && bird.getX() + bird.getWidth() >= x && bird.getX() <= x + width)
+            return true;
+        return false;
+    }
+
+    public boolean needAddPoint(Bird bird) {
+        return false;
+    }
+
+
+
+
 }
 

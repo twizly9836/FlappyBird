@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class ScreenGame implements Screen {
+
+
+    private boolean isGameOver;
     private int tubeCount = 3;
     private Tube[] tubes;
 
@@ -33,7 +36,9 @@ public class ScreenGame implements Screen {
         }
     }
     @Override
-    public void show() {}
+    public void show() {
+        isGameOver = false;
+    }
 
 
     @Override
@@ -48,6 +53,21 @@ public class ScreenGame implements Screen {
         myGdxGame.batch.begin();
         bird.draw(myGdxGame.batch);
         myGdxGame.batch.end();
+        for (Tube tube : tubes) {
+            tube.move();
+            if (tube.isHit(bird)) {
+                if (tube.isHit(bird)) {
+                    System.out.println("hit");
+                    isGameOver = true;
+                    bird.fly();
+                    if (!bird.isInField()) {
+                        System.out.println("not in field");
+                        isGameOver = true;
+                    }
+                }
+
+            }
+        }
     }
 
 
@@ -84,6 +104,5 @@ public class ScreenGame implements Screen {
             tubes[i] = new Tube(tubeCount, i);
         }
     }
-
 }
 
