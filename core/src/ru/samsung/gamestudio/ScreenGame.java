@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class ScreenGame implements Screen {
 
-
+    private int gamePoints;
     private boolean isGameOver;
     private int tubeCount = 3;
     private Tube[] tubes;
@@ -23,20 +23,13 @@ public class ScreenGame implements Screen {
 
         initTubes();
 
-        myGdxGame.camera.update();
-        myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
 
 
-        myGdxGame.batch.begin();
-        bird.draw(myGdxGame.batch);
 
-
-        for (Tube tube : tubes) {
-            tube.draw(myGdxGame.batch);
-        }
     }
     @Override
     public void show() {
+        gamePoints = 0;
         isGameOver = false;
     }
 
@@ -46,28 +39,36 @@ public class ScreenGame implements Screen {
         if (Gdx.input.justTouched()) {
             bird.onClick();
         }
-        myGdxGame.camera.update();
-        myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
+
         bird.fly();
-        ScreenUtils.clear(1, 0, 0, 1);
-        myGdxGame.batch.begin();
-        bird.draw(myGdxGame.batch);
-        myGdxGame.batch.end();
+        if (!bird.isInField()) {
+            System.out.println("not in field");
+            isGameOver = true;
+        }
         for (Tube tube : tubes) {
             tube.move();
             if (tube.isHit(bird)) {
-                if (tube.isHit(bird)) {
-                    System.out.println("hit");
-                    isGameOver = true;
-                    bird.fly();
-                    if (!bird.isInField()) {
-                        System.out.println("not in field");
-                        isGameOver = true;
-                    }
-                }
+                System.out.println("hit");
+                isGameOver = true;
 
+            } else if (tube.needAddPoint(bird)) {
+                gamePoints += 1;
+                System.out.println(gamePoints);
             }
+
         }
+
+
+        myGdxGame.camera.update();
+        myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
+        ScreenUtils.clear(1, 0, 0, 1);
+        myGdxGame.batch.begin();
+        bird.draw(myGdxGame.batch);
+        for (Tube tube : tubes) {
+            tube.draw(myGdxGame.batch);
+        }
+        myGdxGame.batch.end();
+
     }
 
 

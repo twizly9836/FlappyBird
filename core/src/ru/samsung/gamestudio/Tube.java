@@ -20,6 +20,7 @@ public class Tube {
     private int distanceBetweenTubes;
     private int x;
     private int speed = 10;
+    private boolean isPointReceived;
     public Tube(int tubeCount, int tubeIdx) {
         random = new Random();
 
@@ -38,8 +39,8 @@ public class Tube {
     }
     public void move() {
         x -= speed;
-
         if (x < -width) {
+            isPointReceived = false;
             x = SCR_WIDTH + distanceBetweenTubes;
             gapY = gapHeight / 2 + padding + random.nextInt(SCR_HEIGHT - 2 * (padding + gapHeight / 2));
         }
