@@ -32,6 +32,9 @@ public class Tube {
         textureDownTube = new Texture("tubes/tube.png");
 
     }
+    public void setPointReceived() {
+        isPointReceived = true;
+    }
 
     public void draw(Batch batch) {
         batch.draw(textureUpperTube, x, gapY + gapHeight / 2, width, height);
@@ -63,7 +66,7 @@ public class Tube {
     }
 
     public boolean needAddPoint(Bird bird) {
-        return false;
+        return bird.getX() > x + width && !isPointReceived;
     }
 
 
