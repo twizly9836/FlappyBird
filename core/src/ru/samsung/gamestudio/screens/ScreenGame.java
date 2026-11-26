@@ -1,13 +1,17 @@
-package ru.samsung.gamestudio;
+package ru.samsung.gamestudio.screens;
 
-import static javax.swing.text.StyleConstants.Background;
 import static ru.samsung.gamestudio.MyGdxGame.SCR_HEIGHT;
 import static ru.samsung.gamestudio.MyGdxGame.SCR_WIDTH;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import ru.samsung.gamestudio.MyGdxGame;
+import ru.samsung.gamestudio.characters.Bird;
+import ru.samsung.gamestudio.characters.Tube;
+import ru.samsung.gamestudio.components.MovingBackground;
+import ru.samsung.gamestudio.components.PointCounter;
 
 public class ScreenGame implements Screen {
     MovingBackground background;
@@ -23,7 +27,7 @@ public class ScreenGame implements Screen {
 
     MyGdxGame myGdxGame;
     Bird bird;
-    ScreenGame(MyGdxGame myGdxGame) {
+    public ScreenGame(MyGdxGame myGdxGame) {
 
         this.myGdxGame = myGdxGame;
 
@@ -33,7 +37,9 @@ public class ScreenGame implements Screen {
         initTubes();
         pointCounter = new PointCounter(SCR_WIDTH - pointCounterMarginRight, SCR_HEIGHT - pointCounterMarginTop);
 
-        background = new MovingBackground();
+        Object game_bg;
+        game_bg = null;
+        background = new MovingBackground("background/game_bg.png");
 
 
     }
@@ -50,7 +56,7 @@ public class ScreenGame implements Screen {
         if (Gdx.input.justTouched()) {
             bird.onClick();
         }
-
+        background.move();
         bird.fly();
         if (!bird.isInField()) {
             System.out.println("not in field");
@@ -67,7 +73,10 @@ public class ScreenGame implements Screen {
                 tube.setPointReceived();
                 System.out.println(gamePoints);
             }
+        }
 
+        if (isGameOver) {
+            myGdxGame.setScreen(myGdxGame.screenRestart);
         }
 
 

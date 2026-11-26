@@ -1,4 +1,4 @@
-package ru.samsung.gamestudio;
+package ru.samsung.gamestudio.characters;
 
 import static ru.samsung.gamestudio.MyGdxGame.SCR_HEIGHT;
 import static ru.samsung.gamestudio.MyGdxGame.SCR_WIDTH;
@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 import java.util.Random;
+
+import ru.samsung.gamestudio.characters.Bird;
 
 public class Tube {
     private Texture textureUpperTube;
